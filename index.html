@@ -4,12 +4,13 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Lego date</title>
+
   <style>
     body {
       margin: 0;
       font-family: "Poppins", sans-serif;
       overflow: hidden;
-      background-color: #ffd6e8; 
+      background-color: #ffd6e8;
       height: 100vh;
       width: 100vw;
       position: relative;
@@ -19,7 +20,6 @@
       position: absolute;
       inset: 0;
       overflow: hidden;
-      z-index: 1;
     }
 
     .heart {
@@ -30,7 +30,6 @@
       background-color: #ff9ac6;
       transform: rotate(45deg);
       animation: float 6s linear forwards;
-      opacity: 0.9;
     }
 
     .heart::before,
@@ -43,52 +42,39 @@
       border-radius: 50%;
     }
 
-    .heart::before { top: -12px; left: 0; }
-    .heart::after { left: -12px; top: 0; }
+    .heart::before { top: -12px; }
+    .heart::after { left: -12px; }
 
     @keyframes float {
-      0% { transform: translateY(0) rotate(45deg) scale(0.8); opacity:0.9; }
-      100% { transform: translateY(-110vh) rotate(45deg) scale(1.1); opacity:0; }
+      100% { transform: translateY(-110vh) rotate(45deg); opacity: 0; }
     }
 
     .banner {
       position: absolute;
-      top: -150px; 
+      top: 25%;
       left: 50%;
       transform: translateX(-50%);
-      background-color: rgba(245, 130, 180, 0.8);
-      border-radius: 20px;
+      background: rgba(245,130,180,0.8);
       padding: 30px 60px;
-      z-index: 3;
+      border-radius: 20px;
       text-align: center;
-      transition: top 1s ease;
-    }
-
-    .banner.slide-down {
-      top: 25%;
-    }
-
-    .shine-text {
-      font-size: 2.8em;
-      font-weight: 700;
       color: white;
     }
 
     .buttons {
       position: absolute;
-      top: calc(40% + 140px);
-      left: 45%;
+      top: 60%;
+      left: 50%;
       transform: translateX(-50%);
       display: flex;
       gap: 40px;
-      z-index: 4;
     }
 
-    #yesBtn {
-      background-color: #ff9ac6;
-      border: none;
+    button {
       padding: 14px 40px;
       border-radius: 30px;
+      border: none;
+      background: #ff9ac6;
       color: white;
       font-size: 1.1em;
       cursor: pointer;
@@ -96,20 +82,14 @@
 
     #noBtn {
       position: absolute;
-      background-color: #ff9ac6;
-      color: white;
-      border: none;
-      padding: 14px 40px;
-      border-radius: 30px;
-      font-size: 1.1em;
-      cursor: pointer;
     }
   </style>
 </head>
 
 <body>
-  <div class="banner" id="banner">
-    <h1 class="shine-text">Do you want to have a Lego date tomorrow?</h1>
+
+  <div class="banner">
+    <h1>Do you want to have a Lego date tomorrow?</h1>
   </div>
 
   <div class="buttons">
@@ -124,29 +104,40 @@
     const heartsContainer = document.getElementById('heartsContainer');
     const yesBtn = document.getElementById('yesBtn');
     const noBtn = document.getElementById('noBtn');
-    const banner = document.getElementById('banner');
 
+    // 💗 قلوب
     function createHeart() {
       const heart = document.createElement('div');
       heart.className = 'heart';
       heart.style.left = Math.random() * 100 + 'vw';
-      heart.style.animationDuration = 4 + Math.random() * 3 + 's';
       heartsContainer.appendChild(heart);
-      setTimeout(() => heart.remove(), 7000);
+      setTimeout(() => heart.remove(), 6000);
     }
-
     setInterval(createHeart, 150);
 
-    // ✅ التعديل هنا فقط
+    // ✅ زر Yes
     yesBtn.addEventListener("click", () => {
       window.location.href = "/love";
     });
 
-    window.addEventListener('load', () => {
-      setTimeout(() => {
-        banner.classList.add('slide-down');
-      }, 100);
+    // 😭 زر No يهرب
+    function moveNoButton() {
+      const btnWidth = noBtn.offsetWidth;
+      const btnHeight = noBtn.offsetHeight;
+
+      const newLeft = Math.random() * (window.innerWidth - btnWidth);
+      const newTop = Math.random() * (window.innerHeight - btnHeight);
+
+      noBtn.style.left = newLeft + "px";
+      noBtn.style.top = newTop + "px";
+    }
+
+    noBtn.addEventListener('mouseenter', moveNoButton);
+    noBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      moveNoButton();
     });
   </script>
+
 </body>
 </html>
