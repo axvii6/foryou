@@ -1,159 +1,93 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Lego date</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Lego Date</title>
 
-  <style>
-    body {
-      margin: 0;
-      font-family: "Poppins", sans-serif;
-      overflow: hidden;
-      background-color: #ffd6e8;
-      height: 100vh;
-      width: 100vw;
-      position: relative;
-    }
+<style>
+body {
+  margin: 0;
+  font-family: Poppins, sans-serif;
+  background: #ffd6e8;
+  overflow: hidden;
+  height: 100vh;
+}
 
-    #heartsContainer {
-      position: absolute;
-      inset: 0;
-      overflow: hidden;
-    }
+.banner {
+  position: absolute;
+  top: 25%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #ff9ac6;
+  padding: 30px 50px;
+  border-radius: 20px;
+  color: white;
+  text-align: center;
+}
 
-    .heart {
-      position: absolute;
-      bottom: -20px;
-      width: 25px;
-      height: 25px;
-      background-color: #ff9ac6;
-      transform: rotate(45deg);
-      animation: float 6s linear forwards;
-    }
+#yesBtn {
+  position: absolute;
+  top: 60%;
+  left: 40%;
+  padding: 12px 35px;
+  border: none;
+  border-radius: 25px;
+  background: #ff9ac6;
+  color: white;
+  font-size: 1.1em;
+  cursor: pointer;
+}
 
-    .heart::before,
-    .heart::after {
-      content: "";
-      position: absolute;
-      width: 25px;
-      height: 25px;
-      background-color: #ff9ac6;
-      border-radius: 50%;
-    }
-
-    .heart::before { top: -12px; }
-    .heart::after { left: -12px; }
-
-    @keyframes float {
-      100% {
-        transform: translateY(-110vh) rotate(45deg);
-        opacity: 0;
-      }
-    }
-
-    .banner {
-      position: absolute;
-      top: 25%;
-      left: 50%;
-      transform: translateX(-50%);
-      background: rgba(245,130,180,0.8);
-      padding: 30px 60px;
-      border-radius: 20px;
-      text-align: center;
-      color: white;
-    }
-
-    .buttons {
-      position: absolute;
-      top: 60%;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      gap: 40px;
-    }
-
-    button {
-      padding: 14px 40px;
-      border-radius: 30px;
-      border: none;
-      background: #ff9ac6;
-      color: white;
-      font-size: 1.1em;
-      cursor: pointer;
-    }
-
-    #noBtn {
-      position: absolute;
-    }
-  </style>
+#noBtn {
+  position: absolute;
+  top: 60%;
+  left: 55%;
+  padding: 12px 35px;
+  border: none;
+  border-radius: 25px;
+  background: #ff9ac6;
+  color: white;
+  font-size: 1.1em;
+  cursor: pointer;
+}
+</style>
 </head>
 
 <body>
 
-  <div class="banner">
-    <h1>Do you want to have a Lego date tomorrow?</h1>
-  </div>
+<div class="banner">
+  <h1>Do you want to have a Lego date tomorrow? 💗</h1>
+</div>
 
-  <div class="buttons">
-    <button id="yesBtn">Yes ❤️</button>
-  </div>
+<button id="yesBtn">Yes ❤️</button>
+<button id="noBtn">No 💔</button>
 
-  <button id="noBtn">No 💔</button>
+<script>
+window.onload = function () {
 
-  <div id="heartsContainer"></div>
+  const yesBtn = document.getElementById("yesBtn");
+  const noBtn = document.getElementById("noBtn");
 
-  <script>
-    const heartsContainer = document.getElementById('heartsContainer');
-    const yesBtn = document.getElementById('yesBtn');
-    const noBtn = document.getElementById('noBtn');
+  // ✔ Yes يفتح الصفحة
+  yesBtn.onclick = function () {
+    window.location.href = "love.html";
+  };
 
-    // 💗 قلوب
-    function createHeart() {
-      const heart = document.createElement('div');
-      heart.className = 'heart';
-      heart.style.left = Math.random() * 100 + 'vw';
-      heartsContainer.appendChild(heart);
-      setTimeout(() => heart.remove(), 6000);
-    }
-    setInterval(createHeart, 150);
+  // ✔ No يهرب
+  function moveNo() {
+    const x = Math.random() * (window.innerWidth - 100);
+    const y = Math.random() * (window.innerHeight - 50);
 
-    // ✅ زر Yes
-    yesBtn.addEventListener("click", () => {
-      window.location.href = "/love";
-    });
+    noBtn.style.left = x + "px";
+    noBtn.style.top = y + "px";
+  }
 
-    // 🎯 مكان زر No بالبداية
-    function setInitialPosition() {
-      const yesRect = yesBtn.getBoundingClientRect();
-      const left = yesRect.right + 20;
-      const top = yesRect.top;
+  noBtn.onmouseover = moveNo;
+  noBtn.onclick = moveNo;
 
-      noBtn.style.left = left + "px";
-      noBtn.style.top = top + "px";
-    }
-
-    window.addEventListener("load", setInitialPosition);
-    window.addEventListener("resize", setInitialPosition);
-
-    // 😭 زر No يهرب
-    function moveNoButton() {
-      const btnWidth = noBtn.offsetWidth;
-      const btnHeight = noBtn.offsetHeight;
-
-      const newLeft = Math.random() * (window.innerWidth - btnWidth);
-      const newTop = Math.random() * (window.innerHeight - btnHeight);
-
-      noBtn.style.left = newLeft + "px";
-      noBtn.style.top = newTop + "px";
-    }
-
-    noBtn.addEventListener('mouseenter', moveNoButton);
-    noBtn.addEventListener('click', (e) => {
-      e.preventDefault();
-      moveNoButton();
-    });
-  </script>
+};
+</script>
 
 </body>
 </html>
