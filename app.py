@@ -1,14 +1,12 @@
-from flask import Flask
+from http.server import SimpleHTTPRequestHandler, HTTPServer
 
-app = Flask(__name__)
+PORT = 8000
 
-@app.route("/")
-def home():
-    return open("index.html", encoding="utf-8").read()
+class Handler(SimpleHTTPRequestHandler):
+    def do_GET(self):
+        if self.path == "/":
+            self.path = "/index.html"
+        return super().do_GET()
 
-@app.route("/love")
-def love():
-    return open("love.html", encoding="utf-8").read()
-
-if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=10000)
+print("Server running...")
+HTTPServer(("", PORT), Handler).serve_forever()
