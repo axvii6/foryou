@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>My Valentine</title>
   <style>
-    /* Reset & base */
     body.page2 {
       margin: 0;
       height: 100vh;
@@ -21,7 +20,6 @@
       padding: 20px;
     }
 
-    /* Message card */
     .message-card {
       background: rgba(255, 255, 255, 0.25);
       border-radius: 25px;
@@ -29,7 +27,6 @@
       max-width: 400px;
       box-shadow: 0 8px 30px rgba(255, 154, 198, 0.6);
       backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
       border: 2px solid rgba(255, 154, 198, 0.7);
       color: #fff9fb;
     }
@@ -37,20 +34,17 @@
     .message-card h1 {
       font-size: 2.8em;
       margin-bottom: 20px;
-      text-shadow: 0 0 15px #ff69b4, 0 0 25px #ff69b4;
-      color: #f6f3f4;
+      text-shadow: 0 0 15px #ff69b4;
     }
 
     .message-card p {
-      font-size: 1.3em;
-      line-height: 1.5;
-      margin-bottom: 30px;
-      color: #faf8f9;
-      text-shadow: 0 0 12px #ff9ac6;
+      font-size: 1.2em;
+      line-height: 1.6;
       font-weight: 600;
+      text-shadow: 0 0 12px #ff9ac6;
+      direction: rtl;
     }
 
-    /* Button */
     .btn {
       background-color: #ff9ac6;
       color: white;
@@ -60,26 +54,19 @@
       font-weight: 600;
       font-size: 1.1em;
       box-shadow: 0 6px 15px rgba(255, 154, 198, 0.8);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
       display: inline-block;
-      cursor: pointer;
+      margin-top: 20px;
     }
 
-    .btn:hover,
-    .btn:focus {
+    .btn:hover {
       transform: scale(1.05);
-      box-shadow: 0 10px 25px rgba(255, 154, 198, 1);
-      outline: none;
     }
 
     #confetti-container {
       pointer-events: none;
       position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      overflow: visible;
+      inset: 0;
       z-index: 9999;
-      width: 100vw;
-      height: 100vh;
     }
 
     .confetti {
@@ -87,71 +74,55 @@
       width: 10px;
       height: 10px;
       opacity: 0.9;
-      will-change: transform, opacity;
-      animation-name: confetti-fall, confetti-sway;
-      animation-timing-function: linear, ease-in-out;
-      animation-iteration-count: infinite, infinite;
-      animation-fill-mode: forwards;
+      animation: fall 6s linear infinite, sway 3s ease-in-out infinite;
       border-radius: 2px;
     }
 
-    /* Confetti fall */
-    @keyframes confetti-fall {
-      0% {
-        transform: translateY(-10px) rotate(0deg);
-        opacity: 1;
-      }
-      100% {
-        transform: translateY(110vh) rotate(360deg);
-        opacity: 0;
-      }
+    @keyframes fall {
+      0% { transform: translateY(-10px) rotate(0deg); }
+      100% { transform: translateY(110vh) rotate(360deg); }
     }
 
-    @keyframes confetti-sway {
+    @keyframes sway {
       0%, 100% { transform: translateX(0); }
       50% { transform: translateX(20px); }
     }
   </style>
 </head>
+
 <body class="page2">
   <div class="message-card">
-    <h1>💖You said YES💖</h1>
+    <h1> You said YES </h1>
+
     <p>
-      My love, you make my world brighter and my heart lighter.<br>
-      Thank you for being my forever Valentine. 💞
+      اخييييرًا بنسوي الديت <br><br>
+
+      أحبك و أحب وجودك بحياتي، الله يخليييك لي لياني <br><br>
+
+      الوردة الصفراء -Arwa- 🌻
     </p>
-    <a href="index.html" class="btn">I love you ❤️</a>
+
+    <a href="index.html" class="btn">I love you ❣️</a>
   </div>
 
   <div id="confetti-container"></div>
 
   <script>
-    const colors = ['#ff4d6d', '#ff9ac6', '#ff66b3', '#ffc0cb', '#ffb6c1', '#ff3366', '#ff1a75', '#ff80aa', '#ff1a1a', '#ff69b4', '#ffa6c9'];
-    const confettiContainer = document.getElementById('confetti-container');
+    const colors = ['#ff4d6d', '#ff9ac6', '#ff66b3', '#ffc0cb', '#ffb6c1'];
+    const container = document.getElementById('confetti-container');
 
-    function createConfettiPiece() {
-      const confetti = document.createElement('div');
-      confetti.classList.add('confetti');
-      const size = Math.random() * 8 + 6; 
-      confetti.style.width = size + 'px';
-      confetti.style.height = size + 'px';
-      confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-      confetti.style.left = Math.random() * 100 + 'vw';
-      confetti.style.top = '-10px';
+    function createConfetti() {
+      const c = document.createElement('div');
+      c.classList.add('confetti');
+      c.style.left = Math.random() * 100 + 'vw';
+      c.style.background = colors[Math.floor(Math.random() * colors.length)];
+      c.style.animationDuration = (Math.random() * 3 + 4) + 's';
+      container.appendChild(c);
 
-      const fallDuration = Math.random() * 3 + 4; 
-      const swayDuration = Math.random() * 2 + 2; 
-      confetti.style.animationDuration = `${fallDuration}s, ${swayDuration}s`;
-      confetti.style.animationDelay = `${Math.random() * 5}s, 0s`;
-
-      confettiContainer.appendChild(confetti);
-
-      setTimeout(() => {
-        confetti.remove();
-      }, fallDuration * 1000);
+      setTimeout(() => c.remove(), 6000);
     }
 
-    setInterval(createConfettiPiece, 80);
+    setInterval(createConfetti, 100);
   </script>
 </body>
 </html>
