@@ -46,7 +46,10 @@
     .heart::after { left: -12px; }
 
     @keyframes float {
-      100% { transform: translateY(-110vh) rotate(45deg); opacity: 0; }
+      100% {
+        transform: translateY(-110vh) rotate(45deg);
+        opacity: 0;
+      }
     }
 
     .banner {
@@ -119,6 +122,19 @@
     yesBtn.addEventListener("click", () => {
       window.location.href = "/love";
     });
+
+    // 🎯 مكان زر No بالبداية
+    function setInitialPosition() {
+      const yesRect = yesBtn.getBoundingClientRect();
+      const left = yesRect.right + 20;
+      const top = yesRect.top;
+
+      noBtn.style.left = left + "px";
+      noBtn.style.top = top + "px";
+    }
+
+    window.addEventListener("load", setInitialPosition);
+    window.addEventListener("resize", setInitialPosition);
 
     // 😭 زر No يهرب
     function moveNoButton() {
