@@ -1,15 +1,14 @@
-from http.server import SimpleHTTPRequestHandler, HTTPServer
+from flask import Flask
 
-PORT = 8000
+app = Flask(_name_)
 
-class CustomHandler(SimpleHTTPRequestHandler):
-    def do_GET(self):
-        if self.path == '/':
-            self.path = '/index.html'
-        return super().do_GET()
+@app.route("/")
+def home():
+    return open("index.html", encoding="utf-8").read()
 
-if __name__ == "__main__":
-    print(f"🌸 Server running on http://localhost:{PORT}")
-    print("Press CTRL+C to stop the server.")
-    with HTTPServer(("", PORT), CustomHandler) as httpd:
-        httpd.serve_forever()
+@app.route("/love")
+def love():
+    return open("love.html", encoding="utf-8").read()
+
+if _name_ == "_main_":
+    app.run(host="0.0.0.0", port=10000)
