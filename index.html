@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Lego date</title>
   <style>
-    /* basic setup */
     body {
       margin: 0;
       font-family: "Poppins", sans-serif;
@@ -16,7 +15,6 @@
       position: relative;
     }
 
-    /* floating hearts background */
     #heartsContainer {
       position: absolute;
       inset: 0;
@@ -34,6 +32,7 @@
       animation: float 6s linear forwards;
       opacity: 0.9;
     }
+
     .heart::before,
     .heart::after {
       content: "";
@@ -43,6 +42,7 @@
       background-color: #ff9ac6;
       border-radius: 50%;
     }
+
     .heart::before { top: -12px; left: 0; }
     .heart::after { left: -12px; top: 0; }
 
@@ -50,8 +50,7 @@
       0% { transform: translateY(0) rotate(45deg) scale(0.8); opacity:0.9; }
       100% { transform: translateY(-110vh) rotate(45deg) scale(1.1); opacity:0; }
     }
-    
-    /* banner card */
+
     .banner {
       position: absolute;
       top: -150px; 
@@ -63,96 +62,16 @@
       z-index: 3;
       text-align: center;
       transition: top 1s ease;
-      overflow: visible;
     }
 
     .banner.slide-down {
       top: 25%;
     }
 
-    #bubbles {
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      overflow: visible;
-      z-index: 2;
-    }
-
-    .bubble {
-      position: absolute;
-      bottom: 0;
-      width: 15px;
-      height: 15px;
-      background: rgba(255, 182, 193, 0.6);
-      border-radius: 50%;
-      animation: bubbleFloat 6s linear infinite;
-      filter: drop-shadow(0 0 3px rgba(255, 182, 193, 0.8));
-    }
-
-    .bubble:nth-child(2) {
-      width: 10px;
-      height: 10px;
-      animation-duration: 5s;
-      left: 30%;
-      animation-delay: 1.5s;
-    }
-    .bubble:nth-child(3) {
-      width: 20px;
-      height: 20px;
-      animation-duration: 7s;
-      left: 70%;
-      animation-delay: 3s;
-    }
-    .bubble:nth-child(4) {
-      width: 12px;
-      height: 12px;
-      animation-duration: 6.5s;
-      left: 50%;
-      animation-delay: 0.7s;
-    }
-
-    @keyframes bubbleFloat {
-      0% {
-        transform: translateY(0) scale(1);
-        opacity: 0.7;
-      }
-      100% {
-        transform: translateY(-120px) scale(1.3);
-        opacity: 0;
-      }
-    }
-
     .shine-text {
-      position: relative;
       font-size: 2.8em;
       font-weight: 700;
       color: white;
-      text-align: center;
-      background: linear-gradient(90deg, white, #ffe6f1, white);
-      background-size: 200%;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      animation: shine 3s linear infinite, pulseGlow 3.5s ease-in-out infinite;
-      z-index: 5;
-    }
-
-    @keyframes shine {
-      to { background-position: 200%; }
-    }
-
-    @keyframes pulseGlow {
-      0%, 100% {
-        transform: scale(1);
-        text-shadow:
-          0 0 8px rgba(255, 182, 193, 0.8),
-          0 0 20px rgba(255, 182, 193, 0.5);
-      }
-      50% {
-        transform: scale(1.07);
-        text-shadow:
-          0 0 15px rgba(255, 182, 193, 1),
-          0 0 40px rgba(255, 182, 193, 0.7);
-      }
     }
 
     .buttons {
@@ -161,13 +80,8 @@
       left: 45%;
       transform: translateX(-50%);
       display: flex;
-      justify-content: center;
-      align-items: center;
       gap: 40px;
       z-index: 4;
-      margin-top: 0;
-      width: auto;
-      height: auto;
     }
 
     #yesBtn {
@@ -178,49 +92,33 @@
       color: white;
       font-size: 1.1em;
       cursor: pointer;
-      transition: transform 0.2s;
-      position: relative;
-      user-select: none;
-    }
-    #yesBtn:hover {
-      transform: scale(1.05);
     }
 
     #noBtn {
       position: absolute;
       background-color: #ff9ac6;
-      color: #fbfafa;
-      border: 2px solid #ff9ac6;
+      color: white;
+      border: none;
       padding: 14px 40px;
       border-radius: 30px;
       font-size: 1.1em;
       cursor: pointer;
-      user-select: none;
-      z-index: 5;
-      transition: left 0.25s ease, top 0.25s ease;
     }
   </style>
 </head>
+
 <body>
-  <div class="stage" id="stage">
-    <div class="banner" id="banner">
-      <h1 class="shine-text">Do you want to have a Lego date tomorrow?</h1>
-      <div id="bubbles">
-        <div class="bubble" style="left: 20%; animation-delay: 0s;"></div>
-        <div class="bubble" style="left: 40%; animation-delay: 1.5s;"></div>
-        <div class="bubble" style="left: 60%; animation-delay: 3s;"></div>
-        <div class="bubble" style="left: 80%; animation-delay: 0.7s;"></div>
-      </div>
-    </div>
-
-    <div class="buttons" id="buttons">
-      <button id="yesBtn">Yes ❤️</button>
-    </div>
-
-    <button id="noBtn">No 💔</button>
-
-    <div id="heartsContainer"></div>
+  <div class="banner" id="banner">
+    <h1 class="shine-text">Do you want to have a Lego date tomorrow?</h1>
   </div>
+
+  <div class="buttons">
+    <button id="yesBtn">Yes ❤️</button>
+  </div>
+
+  <button id="noBtn">No 💔</button>
+
+  <div id="heartsContainer"></div>
 
   <script>
     const heartsContainer = document.getElementById('heartsContainer');
@@ -228,7 +126,6 @@
     const noBtn = document.getElementById('noBtn');
     const banner = document.getElementById('banner');
 
-    // Floating hearts
     function createHeart() {
       const heart = document.createElement('div');
       heart.className = 'heart';
@@ -237,70 +134,18 @@
       heartsContainer.appendChild(heart);
       setTimeout(() => heart.remove(), 7000);
     }
+
     setInterval(createHeart, 150);
 
+    // ✅ التعديل هنا فقط
     yesBtn.addEventListener("click", () => {
-      window.location.href = "love.html";
+      window.location.href = "/love";
     });
 
-    // Banner slide down effect
     window.addEventListener('load', () => {
       setTimeout(() => {
         banner.classList.add('slide-down');
       }, 100);
-    });
-
-    // Position No button
-    function positionNoButtonInitial() {
-      const yesRect = yesBtn.getBoundingClientRect();
-
-      const left = yesRect.right + 40;
-      const top = yesRect.top;
-
-      noBtn.style.left = `${left}px`;
-      noBtn.style.top = `${top}px`;
-    }
-
-    window.addEventListener('load', () => {
-      positionNoButtonInitial();
-    });
-    window.addEventListener('resize', () => {
-      positionNoButtonInitial();
-    });
-
-    // Distance helper
-    function distance(x1, y1, x2, y2) {
-      return Math.sqrt((x2 - x1)**2 + (y2 - y1)**2);
-    }
-
-    // Move No button randomly
-    function moveNoButton() {
-      const btnWidth = noBtn.offsetWidth;
-      const btnHeight = noBtn.offsetHeight;
-
-      let newLeft, newTop;
-      let tries = 0;
-
-      const rect = noBtn.getBoundingClientRect();
-      const currentLeft = rect.left;
-      const currentTop = rect.top;
-
-      const padding = 10;
-
-      do {
-        newLeft = Math.random() * (window.innerWidth - btnWidth - 2 * padding) + padding;
-        newTop = Math.random() * (window.innerHeight - btnHeight - 2 * padding) + padding;
-        tries++;
-      } while (distance(newLeft, newTop, currentLeft, currentTop) < 150 && tries < 100);
-
-      noBtn.style.left = `${newLeft}px`;
-      noBtn.style.top = `${newTop}px`;
-    }
-
-    noBtn.addEventListener('mouseenter', moveNoButton);
-    noBtn.addEventListener('click', (e) => {
-      e.preventDefault();
-      moveNoButton();
     });
   </script>
 </body>
